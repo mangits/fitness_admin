@@ -70,7 +70,7 @@ app.put('/users', (req, res) =>
   let data = req.body
     db('users')
         .where('id', data.id)
-        .update([{'username': data.username, 'email': data.email, 'password': data.password, 'admin': data.admin}])
+        .update({username: data.username, email: data.email, password: data.password, admin: data.admin})
         .then(data => res.status(200).json(data))
         .catch(err => res.status(500) && console.log(err))
 });
