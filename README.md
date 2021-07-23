@@ -1,4 +1,4 @@
-This provides GUIDANCE on the **Fitness Journey app**, which was supposed to be a tool to create custom routines, view exercises, log workouts and see your workouts. Given the ambition of the project and the amount of time spend creating login and register features for persistent data acccess...the actual site didn't get thos features implemented.
+This provides GUIDANCE on the **Fitness Journey app**, which was supposed to be a tool to create custom routines, view exercises, log workouts and see your workouts. Given the ambition of the project and the amount of time spend creating login and register features for persistent data acccess...the actual site didn't get those features implemented.
 
 What the Fitness Journey app does have is an Express server, Postgres database, full CRUD functionality and **Administrator portal**. I can provide the username/password upon request.
 
