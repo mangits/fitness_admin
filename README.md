@@ -46,8 +46,11 @@ What the Fitness Journey app does have is an Express server, Postgres database, 
   
   **UNDER DEVELOPMENT:**
   **Exercises:** Will store exercises for quick references and descriptions
+  
   **User_Workouts:** Will provide a unique reference for each workout, given a workout consists of many exercises and will also connect to the notes tables.
+  
   **Workouts:** Will provide an exercise, set, rep and weight (future inclusion of cardio/runtimes).
+  
   **Notes:** Will provide a way to jot notes about how the workout felt or future workout ideas during a new workout. Will also include a mood column.
   
   Thanks for checking it out!
