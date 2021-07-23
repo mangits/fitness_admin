@@ -22,7 +22,8 @@ app.get('/', (req, res) => {
   res.json(successMessage);
 });
 
-app.get('/users', (req, res) => {
+app.get('/users', (req, res) =>
+{
   let user = req.query.user;
   if (user) {
   db('users').where('username', user)
@@ -34,7 +35,8 @@ app.get('/users', (req, res) => {
     .catch((err) => res.status(500).send(err));
 }});
 
-app.get('/login', (req, res)=>{
+app.get('/login', (req, res)=>
+{
   let username = req.query.name
   let message = `Cookie set for ${username}`
   if (username) {
@@ -45,35 +47,39 @@ app.get('/login', (req, res)=>{
   }
 });
 
-app.post('/login', (req, res)=>{
+app.post('/login', (req, res)=>
+{
   let data = req.body
   console.log(req.body)
   db('users')
-        .insert({ username: data.username, email: data.email, password: data.password })
+        .insert({ username: data.username, email: data.email, password: data.password, admin: data.admin })
         .then(data => res.status(200).json(data))
         .catch(err => res.status(500) && console.log(err))
 });
 
-app.get('/hello', (req, res) => {
+app.get('/hello', (req, res) =>
+{
   console.log(req.cookies);
   let message = `Welcome back ${req.cookies.name}!`
   (req.cookies) ? res.send(JSON.stringify(message))
   : res.send("Please login!")
 });
 
-app.post('/users', (req, res) =>
+app.put('/users', (req, res) =>
 {
-    db('user')
-        .insert([{item: req.body.item}])
-        .then(data => res.status(201).json(data))
+  let data = req.body
+    db('users')
+        .where('id', data.id)
+        .update([{'username': data.username, 'email': data.email, 'password': data.password, 'admin': data.admin}])
+        .then(data => res.status(200).json(data))
         .catch(err => res.status(500) && console.log(err))
 });
 
 app.delete('/users', (req, res) =>
 {
-    db('user')
+    db('users')
         .where('id', req.body.id).del()
-        .then(data => res.status(202).send("Todo Successfully removed"))
+        .then(data => res.status(200).send("Todo Successfully removed"))
         .catch(err => res.status(500) && console.log(err))
 });
 

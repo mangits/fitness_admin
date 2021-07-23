@@ -5,10 +5,12 @@ exports.up = function(knex) {
     table.string('username').notNullable();
     table.string('email').notNullable();
     table.string('password');
+    table.boolean('admin');
     table.timestamps(true, true)})
     .then(()=>{
      return knex.schema.createTable('exercises', (table) => {
         table.increments('id').primary();
+        table.string('category');
         table.string('name').notNullable();
         table.string('description')})
     })
@@ -38,13 +40,13 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-   return knex.schema.dropTableIfExists('users')
+   return knex.schema.dropTableIfExists('notes')
+   .then(() =>
+   { return knex.schema.dropTableIfExists('workouts')})
   .then(() =>
   { return knex.schema.dropTableIfExists('exercises') })
   .then(() =>
   { return knex.schema.dropTableIfExists('user_workouts') })
   .then(() =>
-  { return knex.schema.dropTableIfExists('workouts') })
-  .then(() =>
-  { return knex.schema.dropTableIfExists('notes') });
+  { return knex.schema.dropTableIfExists('users')});
 };
