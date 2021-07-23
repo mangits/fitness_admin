@@ -26,6 +26,8 @@ What the Fitness Journey app does have is an Express server, Postgres database, 
 
 **/admin:** ONLY accessible when the admin boolean is true for the logged in user. Displayes a list of users within the database with a **GET** request, you will then have the ability to **(PUT)** update the database entries or **DELETE** entries.
 
+![image](https://user-images.githubusercontent.com/83915121/126845580-ecd83764-5531-4426-ad1c-6ed8fe022628.png)
+
 **UNDER DEVELOPMENT:**
 
 **/new_workout:** Furthest in development, features tabs for workout entries and notes. The idea is to **POST** the completed workout to the workouts table. For mobile this screen is swipeable to switch tabs and the icons and buttons scale well.
