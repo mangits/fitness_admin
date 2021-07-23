@@ -15,6 +15,7 @@ const db = knex(environmentConfig);
 
 app.use(cors());
 app.use(cookieParser());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   const successMessage = 'Welcome to your Express server!';
@@ -22,40 +23,57 @@ app.get('/', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
+  let user = req.query.user;
+  if (user) {
+  db('users').where('username', user)
+  .then((data) => res.status(200).json(data))
+  .catch((err) => res.status(500).send(err));
+  } else {
   db.select('*').from('users')
     .then((data) => res.status(200).json(data))
     .catch((err) => res.status(500).send(err));
-});
+}});
 
 app.get('/login', (req, res)=>{
   let username = req.query.name
+  let message = `Cookie set for ${username}`
   if (username) {
-    res.cookie('name', username)
-    res.send(`Set cookie for ${username}`)
+    res.cookie("name", username)
+    res.send(JSON.stringify(message))
   } else {
-    res.send('Set a username with ?name=')
+    res.send("Set a username with ?name=")
   }
+});
+
+app.post('/login', (req, res)=>{
+  let data = req.body
+  console.log(req.body)
+  db('users')
+        .insert({ username: data.username, email: data.email, password: data.password })
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(500) && console.log(err))
 });
 
 app.get('/hello', (req, res) => {
   console.log(req.cookies);
-  (req.cookies) ? res.send(`Welcome back ${req.cookies.name}!`)
-  : res.send('Please login!')
+  let message = `Welcome back ${req.cookies.name}!`
+  (req.cookies) ? res.send(JSON.stringify(message))
+  : res.send("Please login!")
 });
 
-app.post('/todos', (req, res) =>
+app.post('/users', (req, res) =>
 {
-    db('list')
+    db('user')
         .insert([{item: req.body.item}])
         .then(data => res.status(201).json(data))
         .catch(err => res.status(500) && console.log(err))
 });
 
-app.delete('/todos', (req, res) =>
+app.delete('/users', (req, res) =>
 {
-    db('list')
+    db('user')
         .where('id', req.body.id).del()
-        .then(data => res.status(202).send('Todo Successfully removed'))
+        .then(data => res.status(202).send("Todo Successfully removed"))
         .catch(err => res.status(500) && console.log(err))
 });
 
